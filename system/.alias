@@ -9,10 +9,26 @@ alias egrep="egrep --color=always"
 alias be="bin/container-run bundle exec"
 alias cb="bin/container-bash"
 alias cr="bin/container-run"
-alias sshAndres="cd ~/code/factorial/infrastructure & bin/factorio remote_devenv ssh --name=andres"
+alias sshAndres="cd ~/code/factorial/infrastructure && ./bin/factorio remote_devenv ssh --name=andres"
+
+# Git
+alias gp="git pull"
+alias gps="git push"
+alias gs="git status"
+alias ga="git add"
+alias gd="git diff"
+alias gw="git wip"
 
 # Network
-
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ipl="ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
 
+
+fixssh() {
+  for key in SSH_AUTH_SOCK SSH_CONNECTION SSH_CLIENT; do
+    if (tmux show-environment | grep "^${key}" > /dev/null); then
+      value=`tmux show-environment | grep "^${key}" | sed -e "s/^[A-Z_]*=//"`
+      export ${key}="${value}"
+    fi
+  done
+}
