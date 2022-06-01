@@ -27,7 +27,11 @@ ln -sfv "$DOTFILES_DIR/tmux/tmux.conf" ~/.tmux.conf
 ln -sfv "$DOTFILES_DIR/runcom/jsbeautifyrc" ~/.jsbeautifyrc
 
 # GIT
-ln -sfv "$DOTFILES_DIR/git/gitconfig" ~/.gitconfig
+echo "[include]" >> ~/.gitconfig
+echo "   path = .gitconfig-isa" >> ~/.gitconfig
+
+cp "$DOTFILES_DIR/git/gitconfig" ~/.gitconfig-isa
+
 ln -sfv "$DOTFILES_DIR/git/gitattributes" ~/.gitattributes
 ln -sfv "$DOTFILES_DIR/git/gitignore_global" ~/.gitignore_global
 

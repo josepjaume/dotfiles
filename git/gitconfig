@@ -71,11 +71,6 @@
 [branch]
   autosetuprebase = always
 
-[push]
-  # 'git push' will push the current branch to its tracking branch
-  # the usual default is to push all branches
-  default = tracking
-
 [pull]
   ff = only
 
@@ -97,23 +92,8 @@
   # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
   enabled = true
 
-[user]
-	name = isadora
-	email = isadorabk@gmail.com
-
 ## Hack needed because Go language get packages in this way:
 ## git clone https://github.com/something/lol
 ## Git is the best :muscle: Thank you Linus!
 [url "git@github.com:"]
 	insteadOf = https://github.com/
-
-[merge "railsschema"]
-  name = newer Rails schema version
-  driver = "ruby -e '\n\
-    system %(git), %(merge-file), %(--marker-size=%L), %(%A), %(%O), %(%B)\n\
-    b = File.read(%(%A))\n\
-    b.sub!(/^<+ .*\\nActiveRecord::Schema\\.define(version: ([\\d_]+). do\\n=+\\nActiveRecord::Schema\\.define(version: ([\\d_]+). do\\n>+ .*/) do\n\
-      %(ActiveRecord::Schema.define(version: #{[$1, $2].max}) do)\n\
-    end\n\
-    File.open(%(%A), %(w)) {|f| f.write(b)}\n\
-    exit 1 if b.include?(%(<)*%L)'"
